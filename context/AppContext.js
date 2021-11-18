@@ -8,7 +8,7 @@ export const useAppContext = () => {
 
 const AppContextProvider = ({ children }) => {
     const value = {
-        authenticated: false
+        authenticated: true
     }
 
     return (

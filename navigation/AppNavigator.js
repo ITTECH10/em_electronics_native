@@ -11,8 +11,10 @@ import LoginScreen from './screens/Authentication/LoginScreen'
 import TrendsScreen from './screens/TrendsScreen';
 import MyProfileScreen from './screens/MyProfileScreen';
 import HomeScreen from './screens/HomeScreen';
+import SettingsScreen from './screens/SettingsScreen'
 import ForgotPasswordScreen from './screens/Authentication/ForgotPasswordScreen'
 import ResetPasswordScreen from './screens/Authentication/ResetPasswordScreen'
+import EditProfileScreen from './screens/EditProfileScreen'
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,6 +39,8 @@ function ProfileStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Profile" options={{ headerShown: false }} component={MyProfileScreen} />
+            <Stack.Screen name="Settings" options={{ headerTitle: 'Postavke' }} component={SettingsScreen} />
+            <Stack.Screen name="EditProfile" options={{ headerTitle: 'Uređivanje Profila' }} component={EditProfileScreen} />
         </Stack.Navigator>
     );
 }
@@ -45,9 +49,9 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigation
         selectedIndex={state.index}
         onSelect={index => navigation.navigate(state.routeNames[index])}>
-        <BottomNavigationTab title='Messungen' icon={HomeIcon} />
-        <BottomNavigationTab title='Trends' icon={TrendsIcon} />
-        <BottomNavigationTab title='Mein Konto' icon={ProfileIcon} />
+        <BottomNavigationTab title='Artikli' icon={HomeIcon} />
+        <BottomNavigationTab title='Nešto' icon={TrendsIcon} />
+        <BottomNavigationTab title='Račun' icon={ProfileIcon} />
     </BottomNavigation>
 );
 
