@@ -8,8 +8,8 @@ import { useAppContext } from '../../../context/AppContext'
 import Alert from '../../../constants/components/Alert'
 
 const data = [
-    'Herr',
-    'Frau'
+    'Muško',
+    'Žensko'
 ]
 
 const SignupScreen = ({ navigation }) => {
@@ -121,15 +121,15 @@ const SignupScreen = ({ navigation }) => {
                             style={{ marginBottom: 10 }}
                         />
                         <Select
-                            placeholder="Geschlecht"
+                            placeholder="Spol"
                             size="large"
                             value={displayedItem}
                             selectedIndex={selectedItemIndex}
                             onSelect={index => setSelectedItemIndex(index)}
                             style={{ marginBottom: 10 }}
                         >
-                            <SelectItem title="Herr" />
-                            <SelectItem title="Frau" />
+                            <SelectItem title="Muško" />
+                            <SelectItem title="Žensko" />
                         </Select>
                         <Input
                             placeholder="E-mail"
