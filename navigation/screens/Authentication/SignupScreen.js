@@ -4,8 +4,8 @@ import { Button, Layout, Input, useTheme, Select, SelectItem } from '@ui-kitten/
 import AdaptiveText from '../../../constants/components/AdaptiveText'
 import axios from 'axios'
 import { useAppContext } from '../../../context/AppContext'
-// import { storeString } from './../../../utils/StoreDataToStorage'
 import Alert from '../../../constants/components/Alert'
+import { storeGeneralData } from './../../../utils/StoreToStorage'
 
 const data = [
     'Muško',
@@ -13,7 +13,7 @@ const data = [
 ]
 
 const SignupScreen = ({ navigation }) => {
-    // const { setAuthenticated, setToken } = useAppContext()
+    const { setAuthenticated, setToken } = useAppContext()
     const [keyboardVisible, setKeyboardVisible] = React.useState(false)
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0)
     const displayedItem = data[selectedItemIndex.row]
@@ -62,7 +62,7 @@ const SignupScreen = ({ navigation }) => {
         const data = { ...fields, gender: displayedItem.toLowerCase() }
         if (!passwordEqualityHandler(data.password, data.confirmPassword)) {
             setErrors({
-                message: 'Passwörter stimmen nicht überein!!'
+                message: 'Lozinke nisu identične!!'
             })
             return
         }
@@ -77,9 +77,9 @@ const SignupScreen = ({ navigation }) => {
         axios.post('/users/signup', data)
             .then(async res => {
                 if (res.status === 201) {
-                    // setAuthenticated(true)
-                    // await storeString('token', res.data.token)
-                    // setToken(res.data.token)
+                    setAuthenticated(true)
+                    await storeGeneralData('token', res.data.token)
+                    setToken(res.data.token)
                 }
             }).catch(err => {
                 if (err.response.data.error.isOperational) {

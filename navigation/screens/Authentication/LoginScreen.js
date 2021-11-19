@@ -5,11 +5,11 @@ import AdaptiveText from '../../../constants/components/AdaptiveText'
 import Alert from '../../../constants/components/Alert'
 import { useAppContext } from '../../../context/AppContext'
 import axios from 'axios'
-// import { storeString } from './../../../utils/StoreDataToStorage'
+import { storeGeneralData } from './../../../utils/StoreToStorage'
 
 const LoginScreen = ({ navigation }) => {
     const theme = useTheme()
-    // const { setAuthenticated, setToken } = useAppContext()
+    const { setAuthenticated, setToken } = useAppContext()
     const [errors, setErrors] = React.useState({
         message: ''
     })
@@ -30,9 +30,9 @@ const LoginScreen = ({ navigation }) => {
         axios.post('/users/login', data)
             .then(async res => {
                 if (res.status === 201) {
-                    // setAuthenticated(true)
-                    // await storeString('token', res.data.token)
-                    // setToken(res.data.token)
+                    setAuthenticated(true)
+                    await storeGeneralData('token', res.data.token)
+                    setToken(res.data.token)
                 }
             }).catch(err => {
                 setErrors({
