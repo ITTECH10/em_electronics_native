@@ -94,7 +94,7 @@ const SignupScreen = ({ navigation }) => {
     return (
         <Layout style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Layout style={{ width: '100%', height: 240, marginTop: 80 }}>
+                <Layout style={{ width: '100%', height: 240, marginTop: 70 }}>
                     <Image resizeMode="contain" style={{ height: '100%', width: '100%' }} source={require('./../../../assets/images/app-logo.png')} />
                 </Layout>
                 <KeyboardAvoidingView

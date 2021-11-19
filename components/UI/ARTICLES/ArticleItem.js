@@ -41,16 +41,14 @@ const ArticleItem = ({ article }) => {
 export default ArticleItem
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        alignItems: 'center'
-    },
     card: {
         height: 320,
         width: 180,
         margin: 10,
         borderRadius: 15,
-        padding: 10
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#eee'
     },
     cardImageBox: {
         width: '100%',

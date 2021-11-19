@@ -1,6 +1,14 @@
 import React from 'react'
 import { Icon } from "@ui-kitten/components"
 
+export const SearchIcon = (props) => (
+    <Icon {...props}
+        name="magnify"
+        pack="material-community"
+        style={[props.style, { width: 20, height: 20 }]}
+    />
+)
+
 export const RightArrowIcon = (props) => (
     <Icon {...props} style={[props.style, { width: 30, height: 30 }]} name="chevron-right" pack="material-community" />
 )

@@ -50,7 +50,7 @@ const BottomTabBar = ({ navigation, state }) => (
         selectedIndex={state.index}
         onSelect={index => navigation.navigate(state.routeNames[index])}>
         <BottomNavigationTab title='Artikli' icon={HomeIcon} />
-        <BottomNavigationTab title='Nešto' icon={TrendsIcon} />
+        {/* <BottomNavigationTab title='Nešto' icon={TrendsIcon} /> */}
         <BottomNavigationTab title='Račun' icon={ProfileIcon} />
     </BottomNavigation>
 );
@@ -58,7 +58,7 @@ const BottomTabBar = ({ navigation, state }) => (
 const TabNavigator = () => (
     <Navigator screenOptions={{ headerShown: false }} tabBar={props => <BottomTabBar {...props} />}>
         <Screen name='Measurements' component={HomeStackNavigator} />
-        <Screen name='Trends' component={TrendsStackNavigator} />
+        {/* <Screen name='Trends' component={TrendsStackNavigator} /> */}
         <Screen name='MyProfile' component={ProfileStackNavigator} />
     </Navigator>
 );
