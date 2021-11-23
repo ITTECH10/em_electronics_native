@@ -9,7 +9,7 @@ const ArticleItem = ({ article }) => {
                 <Layout style={styles.cardImageBox}>
                     <Image
                         style={styles.cardImage}
-                        source={{ uri: article.imageUrl }}
+                        source={{ uri: article.image }}
                         resizeMode="cover"
                     />
                 </Layout>
@@ -19,7 +19,7 @@ const ArticleItem = ({ article }) => {
                 <Layout style={styles.cardDetails}>
                     <Layout style={styles.cardDetailsRow}>
                         <Text category="s2">ID:</Text>
-                        <Text category="s2">{article.id}</Text>
+                        <Text category="s2">{article.articleId}</Text>
                     </Layout>
                     <Layout style={styles.cardDetailsRow}>
                         <Text category="s2">BROJ:</Text>
@@ -27,7 +27,7 @@ const ArticleItem = ({ article }) => {
                     </Layout>
                     <Layout style={styles.cardDetailsRow}>
                         <Text category="s2">ŠIFRA:</Text>
-                        <Text category="s2">{article.password}</Text>
+                        <Text category="s2">{article.codedNumber}</Text>
                     </Layout>
                 </Layout>
                 <Button style={styles.cardBtn}>

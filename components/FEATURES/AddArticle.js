@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Button, Icon, useTheme } from '@ui-kitten/components'
+import { Button, Icon } from '@ui-kitten/components'
 
 export const PlusIcon = (props) => (
     <Icon {...props}
@@ -10,13 +10,12 @@ export const PlusIcon = (props) => (
     />
 )
 
-const AddArticle = () => {
-    const theme = useTheme()
-
+const AddArticle = ({ onPressHandler }) => {
     return <Button
         accessoryRight={PlusIcon}
         style={{ ...styles.button }}
         status="info"
+        onPress={onPressHandler}
     />
 }
 

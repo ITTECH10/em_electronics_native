@@ -15,7 +15,7 @@ const SettingsScreen = ({ navigation }) => {
                 renderItem={renderSettingsScreenItem}
                 key={item => item.id}
             />
-            <Logout navigation={navigation} />
+            {/* <Logout navigation={navigation} /> */}
         </Layout >
     )
 }

@@ -52,3 +52,11 @@ export const clearAll = async () => {
     }
 }
 
+export const removeFew = async (keys) => {
+    try {
+        await AsyncStorage.multiRemove(keys)
+    } catch (e) {
+        // remove error
+        console.log(e)
+    }
+}

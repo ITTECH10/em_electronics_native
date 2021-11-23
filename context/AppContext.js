@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { clearAll, getGeneralData } from './../utils/StoreToStorage'
-import jwtDecode from 'jwt-decode'
+import NetInfo from '@react-native-community/netinfo';
+import { clearAll, getGeneralData, removeFew } from './../utils/StoreToStorage'
+// import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 
 const AppContext = React.createContext()
@@ -10,12 +11,43 @@ export const useAppContext = () => {
 }
 
 const AppContextProvider = ({ children }) => {
-    const [authenticated, setAuthenticated] = React.useState(false)
+    const [authenticated, setAuthenticated] = React.useState(true)
+    const [connectionStatus, setConnectionStatus] = React.useState()
     const [generalAppLoading, setGeneralAppLoading] = React.useState(false)
     const [token, setToken] = React.useState()
+    const [articles, setArticles] = React.useState([])
+    const [dbArticles, setDbArticles] = React.useState([])
+
+    // console.log(serverState)
+
+    // const DB_MISSING_ARTICLES = dbArticles.map(dbArticle => {
+    //     return articles.filter(article => +dbArticle.articleId !== +article.articleId)
+    // }).flat();
+
+    const checkConnectionAvailability = React.useCallback(() => {
+        return NetInfo.addEventListener(state => {
+            const { isConnected } = state
+
+            if (isConnected) {
+                setConnectionStatus(true)
+            } else {
+                setConnectionStatus(false)
+            }
+        })
+    }, [connectionStatus])
+
+    const getAllArticlesFromDb = React.useCallback(() => {
+        axios('/articles').then(res => {
+            if (res.status === 200) {
+                setDbArticles(res.data.articles)
+            }
+        }).catch(err => {
+            // console.log(err)
+        })
+    }, [])
 
     const logout = () => {
-        clearAll()
+        removeFew(['token'])
         setToken(undefined)
         setGeneralAppLoading(true)
 
@@ -25,22 +57,22 @@ const AppContextProvider = ({ children }) => {
         }, 2000)
     }
 
-    const checkForToken = React.useCallback(async () => {
-        const foundToken = await getGeneralData('token')
-        if (!foundToken) return
+    // const checkForToken = React.useCallback(async () => {
+    //     const foundToken = await getGeneralData('token')
+    //     if (!foundToken) return
 
-        if (foundToken) {
-            const decodedToken = jwtDecode(foundToken)
-            setToken(foundToken)
+    //     if (foundToken) {
+    //         const decodedToken = jwtDecode(foundToken)
+    //         setToken(foundToken)
 
-            if (new Date(decodedToken.exp) * 1000 < new Date()) {
-                logout()
-            }
+    //         if (new Date(decodedToken.exp) * 1000 < new Date()) {
+    //             logout()
+    //         }
 
-            axios.defaults.headers.common['Authorization'] = foundToken
-            setAuthenticated(true)
-        }
-    }, [token])
+    //         axios.defaults.headers.common['Authorization'] = foundToken
+    //         setAuthenticated(true)
+    //     }
+    // }, [token])
 
     const value = {
         authenticated,
@@ -48,7 +80,14 @@ const AppContextProvider = ({ children }) => {
         setToken,
         logout,
         generalAppLoading,
-        checkForToken
+        // checkForToken,
+        checkConnectionAvailability,
+        connectionStatus,
+        articles,
+        setArticles,
+        dbArticles,
+        setDbArticles,
+        getAllArticlesFromDb
     }
 
     return (

@@ -19,8 +19,12 @@ const AdaptiveModal = ({ children, visible, setVisible, style }) => {
 export default AdaptiveModal
 
 const styles = StyleSheet.create({
-    modal: {},
+    modal: {
+        backgroundColor: '#fff',
+        borderRadius: 6,
+        overflow: 'hidden'
+    },
     backdrop: {
-        backgroundColor: 'rgba(0, 0, 0, .5)'
+        backgroundColor: 'rgba(0, 0, 0, .3)'
     }
 })

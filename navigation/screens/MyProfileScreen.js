@@ -3,7 +3,7 @@ import { Layout, Button, Text, useTheme } from '@ui-kitten/components';
 import PrimaryColorView from './../../constants/components/PrimaryColorView'
 import { View, Image } from 'react-native';
 import AdaptiveText from './../../constants/components/AdaptiveText'
-import { useAppContext } from './../../context/AppContext'
+// import { useAppContext } from './../../context/AppContext'
 import { NotificationsBellIcon, EditIcon, FaqIcon, HelpIcon, AddMemberIcon, SettingsIcon } from './../../components/UI/ICONS/icons'
 
 const MyProfileScreen = ({ navigation }) => {
