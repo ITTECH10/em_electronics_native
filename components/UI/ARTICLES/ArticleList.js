@@ -2,12 +2,9 @@ import React from 'react'
 import { StyleSheet, FlatList } from 'react-native'
 import ArticleItem from './ArticleItem'
 // import ArticleDataProvider from './../../../utils/DataProviders/ArticleDataProvider'
-import { useAppContext } from './../../../context/AppContext'
-
 // const articleData = new ArticleDataProvider().getArticles()
 
-const ArticleList = () => {
-    const { articles } = useAppContext()
+const ArticleList = ({ articles }) => {
 
     return (
         <FlatList

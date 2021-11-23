@@ -9,7 +9,8 @@ import { useAppContext } from './../../context/AppContext'
 
 const HomeScreen = () => {
     const [modalOpen, setModalOpen] = React.useState(false)
-    const { setArticles, getAllArticlesFromDb, connectionStatus } = useAppContext()
+    const { setArticles, getAllArticlesFromDb, connectionStatus, articles } = useAppContext()
+    const [searchQuery, setSearchQuery] = React.useState('')
 
     const loadLocalStoredArticles = React.useCallback(async () => {
         const jsonValue = await AsyncStorage.getItem('articles')
@@ -17,6 +18,8 @@ const HomeScreen = () => {
             setArticles(JSON.parse(jsonValue))
         }
     }, [])
+
+    const queriedArticles = articles.filter(article => article.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) || article.codedNumber.toLowerCase().includes(searchQuery.toLowerCase().trim()))
 
     React.useEffect(() => {
         loadLocalStoredArticles()
@@ -27,8 +30,12 @@ const HomeScreen = () => {
 
     return (
         <Layout style={styles.screen}>
-            <SearchArticles />
-            <ArticleList />
+            <SearchArticles
+                setQuery={setSearchQuery}
+            />
+            <ArticleList
+                articles={searchQuery !== '' ? queriedArticles : articles}
+            />
             <AddArticleModal
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}

@@ -1,11 +1,14 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Layout, Text, Button } from '@ui-kitten/components'
+import { useNavigation } from '@react-navigation/native';
 
 const ArticleItem = ({ article }) => {
+    const navigation = useNavigation();
+
     return (
         <Layout style={styles.card}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ArticleDetails', { articleId: article.articleId })}>
                 <Layout style={styles.cardImageBox}>
                     <Image
                         style={styles.cardImage}
@@ -30,7 +33,10 @@ const ArticleItem = ({ article }) => {
                         <Text category="s2">{article.codedNumber}</Text>
                     </Layout>
                 </Layout>
-                <Button style={styles.cardBtn}>
+                <Button
+                    style={styles.cardBtn}
+                    onPress={() => navigation.navigate('ArticleDetails')}
+                >
                     VIŠE
                 </Button>
             </TouchableOpacity>

@@ -11,6 +11,7 @@ import LoginScreen from './screens/Authentication/LoginScreen'
 // import TrendsScreen from './screens/TrendsScreen';
 // import MyProfileScreen from './screens/MyProfileScreen';
 import HomeScreen from './screens/HomeScreen';
+import ArticleDetailsScreen from './screens/ArticleDetailsScreen';
 import SettingsScreen from './screens/SettingsScreen'
 import ForgotPasswordScreen from './screens/Authentication/ForgotPasswordScreen'
 import ResetPasswordScreen from './screens/Authentication/ResetPasswordScreen'
@@ -23,6 +24,11 @@ function HomeStackNavigator() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen
+                name="ArticleDetails"
+                component={ArticleDetailsScreen}
+            // options={{ headerShown: true, headerTitle: 'Artikal Detalji' }}
+            />
         </Stack.Navigator>
     );
 }
