@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { Layout, Button, Icon, Text, useTheme } from '@ui-kitten/components'
 import { useAppContext } from './../../context/AppContext'
+import * as ImagePicker from 'expo-image-picker'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SearchIcon = (props) => (
     <Icon {...props}
@@ -10,22 +12,69 @@ const SearchIcon = (props) => (
         style={[props.style, { width: 30, height: 30, color: '#fff' }]}
     />
 )
+
+const PhotoIcon = (props) => (
+    <Icon {...props}
+        name="camera"
+        pack="material-community"
+        style={[props.style, { width: 25, height: 25 }]}
+    />
+)
+
 const ArticleDetailsScreen = ({ navigation, route }) => {
     const theme = useTheme(theme)
     const [activeSwitchBtn, setActiveSwitchBtn] = React.useState(0)
-    const { articles } = useAppContext()
+    const [image, setImage] = React.useState(null);
+    const [base64Image, setBase64Image] = React.useState(null);
 
+    const { articles, setArticles } = useAppContext()
     const selectedArticleId = route.params.articleId
-    const foundArticle = articles.find(article => article.articleId === selectedArticleId)
-    const { articleId, codedNumber, number, name, image } = foundArticle
+    // const foundArticle = articles.find(article => article.articleId === selectedArticleId)
+
+    const foundArticleIndex = articles.findIndex(article => article.articleId === selectedArticleId)
+    const foundArticle = articles[foundArticleIndex]
+
+    const { articleId, codedNumber, number, name, image: selectedImage } = foundArticle
+
+    const pickImageHandler = async () => {
+        if (Platform.OS !== 'web') {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+                alert('Da biste dodali sliku artikla, morate omogućiti pristup vašoj galeriji!');
+            } else {
+                let result = await ImagePicker.launchImageLibraryAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.All,
+                    allowsEditing: true,
+                    quality: 1,
+                    base64: true
+                });
+
+                if (!result.cancelled) {
+                    try {
+                        foundArticle.image = result.uri
+
+                        const updatedArticles = [...articles]
+                        updatedArticles[foundArticleIndex] = foundArticle
+                        await AsyncStorage.setItem('articles', JSON.stringify(updatedArticles))
+
+                        setArticles(updatedArticles)
+                        setImage(result.uri);
+                        setBase64Image(`data:image/jpg;base64,${result.base64}`)
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+            }
+        }
+    }
 
     return (
         <Layout style={styles.screen}>
             <Layout style={styles.article}>
                 <Layout style={styles.articleBgContainer}>
                     <Image
-                        source={{ uri: 'https://images.pexels.com/photos/552789/pexels-photo-552789.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' }}
-                        // source={{ uri: image }}
+                        source={{ uri: image ? image : selectedImage }}
+                        // source={{ uri: selectedImage }}
                         style={styles.articleBgImage}
                     />
                     <Layout style={styles.articleContent}>
@@ -55,6 +104,7 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                                 style={{ ...styles.buttonSaveEvent, ...styles.headerBtn }}
                                 appearance="outline"
                                 size="medium"
+                                onPress={() => navigation.navigate('EditArticle')}
                             >
                                 IZMJENA
                             </Button>
@@ -62,9 +112,9 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                                 style={{ ...styles.buttonBuyTicket, ...styles.headerBtn }}
                                 appearance="outline"
                                 size="medium"
-                            >
-                                NEŠTO
-                            </Button>
+                                accessoryLeft={PhotoIcon}
+                                onPress={pickImageHandler}
+                            />
                         </Layout>
                     </Layout>
                 </Layout>

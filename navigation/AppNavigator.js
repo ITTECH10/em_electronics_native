@@ -12,6 +12,7 @@ import LoginScreen from './screens/Authentication/LoginScreen'
 // import MyProfileScreen from './screens/MyProfileScreen';
 import HomeScreen from './screens/HomeScreen';
 import ArticleDetailsScreen from './screens/ArticleDetailsScreen';
+import EditArticleScreen from './screens/EditArticleScreen';
 import SettingsScreen from './screens/SettingsScreen'
 import ForgotPasswordScreen from './screens/Authentication/ForgotPasswordScreen'
 import ResetPasswordScreen from './screens/Authentication/ResetPasswordScreen'
@@ -27,7 +28,11 @@ function HomeStackNavigator() {
             <Stack.Screen
                 name="ArticleDetails"
                 component={ArticleDetailsScreen}
-            // options={{ headerShown: true, headerTitle: 'Artikal Detalji' }}
+            />
+            <Stack.Screen
+                name="EditArticle"
+                component={EditArticleScreen}
+                options={{ headerShown: true, headerTitle: 'Izmjena Artikla' }}
             />
         </Stack.Navigator>
     );
