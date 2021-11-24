@@ -17,7 +17,7 @@ const PhotoIcon = (props) => (
     <Icon {...props}
         name="camera"
         pack="material-community"
-        style={[props.style, { width: 25, height: 25 }]}
+        style={[props.style, { width: 20, height: 20 }]}
     />
 )
 
@@ -87,24 +87,26 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                                 onPress={() => navigation.goBack()}
                             />
                         </Layout>
-                        <Text
+                        {/* <Text
                             category="h5"
                             style={styles.articleTitle}
                         >
                             {name}
-                        </Text>
+                        </Text> */}
                         {/* <Text
                             category="h5"
                             style={styles.articleTitle}
                         >
                             Encounter 2016
                         </Text> */}
-                        <Layout style={styles.articleHeaderBtns}>
+                        {/* <Layout style={styles.articleHeaderBtns}>
                             <Button
                                 style={{ ...styles.buttonSaveEvent, ...styles.headerBtn }}
                                 appearance="outline"
                                 size="medium"
-                                onPress={() => navigation.navigate('EditArticle')}
+                                onPress={() => navigation.navigate('EditArticle', {
+                                    articleId: selectedArticleId
+                                })}
                             >
                                 IZMJENA
                             </Button>
@@ -112,17 +114,19 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                                 style={{ ...styles.buttonBuyTicket, ...styles.headerBtn }}
                                 appearance="outline"
                                 size="medium"
-                                accessoryLeft={PhotoIcon}
+                                accessoryRight={PhotoIcon}
                                 onPress={pickImageHandler}
-                            />
-                        </Layout>
+                            >
+                                PROMJENI SLIKU
+                            </Button>
+                        </Layout> */}
                     </Layout>
                 </Layout>
                 <Layout level='2' style={styles.articleInfoSwitcher}>
                     <Button
                         style={{ ...styles.switchBtnAbout, ...styles.switchBtn }}
                         appearance="ghost"
-                        status={activeSwitchBtn === 0 ? 'primary' : 'basic'}
+                        status='warning'
                         onPress={() => setActiveSwitchBtn(0)}
                     >
                         O ARTIKLU
@@ -132,10 +136,98 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                         appearance="ghost"
                         status="basic"
                         status={activeSwitchBtn === 1 ? 'primary' : 'basic'}
-                        onPress={() => setActiveSwitchBtn(1)}
+                        // onPress={() => setActiveSwitchBtn(1)}
+                        onPress={pickImageHandler}
+                    // accessoryRight={PhotoIcon}
                     >
-                        OPIS
+                        PROMJENI SLIKU
                     </Button>
+                    <Button
+                        style={{ ...styles.switchBtnAbout, ...styles.switchBtn }}
+                        appearance="ghost"
+                        status="basic"
+                        onPress={() => navigation.navigate('EditArticle', {
+                            articleId: selectedArticleId
+                        })}
+                    >
+                        IZMJENA
+                    </Button>
+                </Layout>
+
+                {/* DETAILS */}
+                <Layout style={styles.detailsContainer}>
+                    <Layout style={styles.detailsRow}>
+                        <Layout style={{ ...styles.valueBox, width: '20%', backgroundColor: theme['color-success-500'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                ID
+                            </Text>
+                        </Layout>
+                        <Layout style={{ ...styles.valueBox, width: '80%', backgroundColor: theme['color-warning-300'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                {foundArticle.articleId}
+                            </Text>
+                        </Layout>
+                    </Layout>
+                    <Layout style={styles.detailsRow}>
+                        <Layout style={{ ...styles.valueBox, width: '20%', backgroundColor: theme['color-success-500'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                NAZIV
+                            </Text>
+                        </Layout>
+                        <Layout style={{ ...styles.valueBox, width: '80%', backgroundColor: theme['color-warning-300'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                {foundArticle.name}
+                            </Text>
+                        </Layout>
+                    </Layout>
+                    <Layout style={styles.detailsRow}>
+                        <Layout style={{ ...styles.valueBox, width: '20%', backgroundColor: theme['color-success-500'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                BROJ
+                            </Text>
+                        </Layout>
+                        <Layout style={{ ...styles.valueBox, width: '80%', backgroundColor: theme['color-warning-300'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                {foundArticle.number}
+                            </Text>
+                        </Layout>
+                    </Layout>
+                    <Layout style={styles.detailsRow}>
+                        <Layout style={{ ...styles.valueBox, width: '20%', backgroundColor: theme['color-success-500'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                ŠIFRA
+                            </Text>
+                        </Layout>
+                        <Layout style={{ ...styles.valueBox, width: '80%', backgroundColor: theme['color-warning-300'] }}>
+                            <Text
+                                category="h6"
+                                style={{ color: '#fff' }}
+                            >
+                                {foundArticle.codedNumber}
+                            </Text>
+                        </Layout>
+                    </Layout>
                 </Layout>
             </Layout>
         </Layout>
@@ -151,11 +243,11 @@ const styles = StyleSheet.create({
     },
     articleBgContainer: {
         height: 230,
-        backgroundColor: 'grey'
+        // backgroundColor: 'grey'
     },
     articleBgImage: {
         height: '100%',
-        opacity: .8
+        // opacity: .8
     },
     articleContent: {
         // height: '27%',
@@ -197,6 +289,24 @@ const styles = StyleSheet.create({
     },
     switchBtn: {
         width: '36%'
+    },
+    detailsContainer: {
+        margin: 10
+    },
+    detailsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        // borderColor: 'green',
+        // borderWidth: 1,
+        // padding: 10,
+        width: '100%',
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginBottom: 15
+    },
+    valueBox: {
+        padding: 10
     }
 })
 

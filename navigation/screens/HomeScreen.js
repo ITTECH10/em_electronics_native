@@ -35,6 +35,7 @@ const HomeScreen = () => {
             />
             <ArticleList
                 articles={searchQuery !== '' ? queriedArticles : articles}
+                setArticles={setArticles}
             />
             <AddArticleModal
                 modalOpen={modalOpen}

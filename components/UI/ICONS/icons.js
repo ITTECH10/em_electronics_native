@@ -22,7 +22,7 @@ export const SetGoalIcon = (props) => (
 )
 
 export const DeleteIcon = (props) => (
-    <Icon {...props} style={[props.style, { width: 25, height: 25, color: 'red' }]} name="delete-outline" pack="material-community" />
+    <Icon {...props} style={[props.style, { width: 20, height: 20, color: 'red' }]} name="delete-outline" pack="material-community" />
 )
 
 export const VideoTutorialIcon = (props) => (

@@ -80,6 +80,8 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
         formIsValid: false
     })
 
+    const idExists = articles.some(article => article.articleId === formState.inputValues.articleId)
+
     const resetStateHandler = () => {
         dispatch({ type: RESET_FORM_STATE })
         setModalOpen(false)
@@ -125,45 +127,46 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
     }
 
     const handleSubmit = async () => {
+        if (idExists) return
         // BASED ON CONNECTION STATUS DO NEXT THINGS
         // 1) IF THERE IS AN INTERNET CONNECTION STORE ARTICLE ON LOCAL DEVICE AND DB
-        if (connectionStatus) {
-            const data = new FormData();
+        // if (connectionStatus) {
+        //     const data = new FormData();
 
-            data.append('file', base64Image)
-            data.append('upload_preset', 'dn9yispt3')
-            data.append("cloud_name", "dn9yispt3")
+        //     data.append('file', base64Image)
+        //     data.append('upload_preset', 'dn9yispt3')
+        //     data.append("cloud_name", "dn9yispt3")
 
-            // STORE TO CLOUDINARY
-            fetch("https://api.cloudinary.com/v1_1/dn9yispt3/upload", {
-                method: "post",
-                body: data
-            }).then(res => res.json()).
-                then(data => {
-                    // STORE TO DB
-                    if (data.secure_url) {
-                        const postData = {
-                            ...formState.inputValues,
-                            image: data.secure_url
-                        }
+        //     // STORE TO CLOUDINARY
+        //     fetch("https://api.cloudinary.com/v1_1/dn9yispt3/upload", {
+        //         method: "post",
+        //         body: data
+        //     }).then(res => res.json()).
+        //         then(data => {
+        //             // STORE TO DB
+        //             if (data.secure_url) {
+        //                 const postData = {
+        //                     ...formState.inputValues,
+        //                     image: data.secure_url
+        //                 }
 
-                        axios.post('/articles', postData).then(res => {
-                            if (res.status === 201) {
-                                setModalOpen(false)
-                                setImage(null)
-                                setBase64Image(null)
-                            }
-                        }).catch(err => {
-                            console.log(err)
-                        })
-                    } else {
-                        return
-                    }
-                }).catch(err => {
-                    alert("An Error Occured While Uploading")
-                    console.log(err)
-                })
-        }
+        //                 axios.post('/articles', postData).then(res => {
+        //                     if (res.status === 201) {
+        //                         setModalOpen(false)
+        //                         setImage(null)
+        //                         setBase64Image(null)
+        //                     }
+        //                 }).catch(err => {
+        //                     console.log(err)
+        //                 })
+        //             } else {
+        //                 return
+        //             }
+        //         }).catch(err => {
+        //             alert("An Error Occured While Uploading")
+        //             console.log(err)
+        //         })
+        // }
 
         // 2) IF NOT STORE ONLY ON LOCAL DEVICE
         try {
@@ -207,6 +210,10 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
                             behavior="padding"
                             keyboardVerticalOffset={260}
                         >
+                            {idExists &&
+                                <Text status="danger">
+                                    ID već postoji...
+                                </Text>}
                             <Input
                                 placeholder="ID Artikla"
                                 keyboardType="numeric"
@@ -249,7 +256,7 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
                     <Layout style={styles.modalActions}>
                         <Button
                             size="medium"
-                            style={{ ...styles.btn, backgroundColor: theme['color-danger-700'] }}
+                            style={{ ...styles.btn, backgroundColor: theme['color-danger-500'] }}
                             onPress={resetStateHandler}
                         >
                             IZAĐI
