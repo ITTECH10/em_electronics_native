@@ -2,15 +2,20 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import ArticleList from './../../components/UI/ARTICLES/ArticleList'
-import SearchArticles from './../../components/FEATURES/SearchArticles'
 import AddArticleModal from '../../components/UI/ARTICLES/AddArticleModal'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppContext } from './../../context/AppContext'
+import { SearchIcon } from './../../components/UI/ICONS/icons'
+import AdaptiveInput from '../../constants/components/AdaptiveInput'
 
 const HomeScreen = () => {
     const [modalOpen, setModalOpen] = React.useState(false)
-    const { setArticles, getAllArticlesFromDb, connectionStatus, articles } = useAppContext()
+    const { setArticles, articles } = useAppContext()
     const [searchQuery, setSearchQuery] = React.useState('')
+
+    const queryChangeHandler = (text) => {
+        setSearchQuery(text)
+    }
 
     const loadLocalStoredArticles = React.useCallback(async () => {
         const jsonValue = await AsyncStorage.getItem('articles')
@@ -23,15 +28,19 @@ const HomeScreen = () => {
 
     React.useEffect(() => {
         loadLocalStoredArticles()
-        if (connectionStatus) {
-            getAllArticlesFromDb()
-        }
-    }, [loadLocalStoredArticles, getAllArticlesFromDb, connectionStatus])
+        // if (connectionStatus) {
+        //     getAllArticlesFromDb()
+        // }
+    }, [loadLocalStoredArticles])
 
     return (
         <Layout style={styles.screen}>
-            <SearchArticles
-                setQuery={setSearchQuery}
+            <AdaptiveInput
+                changeTextHandler={queryChangeHandler}
+                severity='color-success-500'
+                icon={SearchIcon}
+                placeholder="Pretražite artikle..."
+                size="large"
             />
             <ArticleList
                 articles={searchQuery !== '' ? queriedArticles : articles}

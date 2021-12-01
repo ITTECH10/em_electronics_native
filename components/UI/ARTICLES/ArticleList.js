@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, FlatList } from 'react-native'
-import ArticleItem from './ArticleItem'
 import ArticleItemAlternativeOne from './ArticleItemAlternativeOne'
 import AdaptiveModal from './../../../constants/components/AdaptiveModal'
 import { Layout, Text, Button } from '@ui-kitten/components'

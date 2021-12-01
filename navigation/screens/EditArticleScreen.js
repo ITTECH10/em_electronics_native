@@ -107,11 +107,6 @@ const EditArticleScreen = ({ navigation, route }) => {
                         >
                             Izmjenite detalje artikla...
                         </Text>
-                        <Text
-                            style={{ color: theme['color-basic-100'], position: 'absolute', top: 5, right: 10 }}
-                        >
-                            X
-                        </Text>
                     </Layout>
 
                     <Layout style={styles.content}>
@@ -156,7 +151,6 @@ const EditArticleScreen = ({ navigation, route }) => {
                             status="success"
                             style={{ ...styles.saveBtn, ...styles.footerBtn }}
                             onPress={handleSubmit}
-                        // disabled={!formState.formIsValid}
                         >
                             GOTOVO
                         </Button>

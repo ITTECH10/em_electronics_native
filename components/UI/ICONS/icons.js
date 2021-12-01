@@ -132,3 +132,11 @@ export const AddMemberIcon = (props) => (
 export const SettingsIcon = (props) => (
     <Icon {...props} name="cog-outline" pack="material-community" />
 )
+
+export const PlusIcon = (props) => (
+    <Icon {...props}
+        name="file-plus"
+        pack="material-community"
+        style={[props.style, { width: 25, height: 25 }]}
+    />
+)

@@ -13,14 +13,6 @@ const SearchIcon = (props) => (
     />
 )
 
-const PhotoIcon = (props) => (
-    <Icon {...props}
-        name="camera"
-        pack="material-community"
-        style={[props.style, { width: 20, height: 20 }]}
-    />
-)
-
 const ArticleDetailsScreen = ({ navigation, route }) => {
     const theme = useTheme(theme)
     const [activeSwitchBtn, setActiveSwitchBtn] = React.useState(0)
@@ -74,7 +66,6 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                 <Layout style={styles.articleBgContainer}>
                     <Image
                         source={{ uri: image ? image : selectedImage }}
-                        // source={{ uri: selectedImage }}
                         style={styles.articleBgImage}
                     />
                     <Layout style={styles.articleContent}>
@@ -87,39 +78,6 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                                 onPress={() => navigation.goBack()}
                             />
                         </Layout>
-                        {/* <Text
-                            category="h5"
-                            style={styles.articleTitle}
-                        >
-                            {name}
-                        </Text> */}
-                        {/* <Text
-                            category="h5"
-                            style={styles.articleTitle}
-                        >
-                            Encounter 2016
-                        </Text> */}
-                        {/* <Layout style={styles.articleHeaderBtns}>
-                            <Button
-                                style={{ ...styles.buttonSaveEvent, ...styles.headerBtn }}
-                                appearance="outline"
-                                size="medium"
-                                onPress={() => navigation.navigate('EditArticle', {
-                                    articleId: selectedArticleId
-                                })}
-                            >
-                                IZMJENA
-                            </Button>
-                            <Button
-                                style={{ ...styles.buttonBuyTicket, ...styles.headerBtn }}
-                                appearance="outline"
-                                size="medium"
-                                accessoryRight={PhotoIcon}
-                                onPress={pickImageHandler}
-                            >
-                                PROMJENI SLIKU
-                            </Button>
-                        </Layout> */}
                     </Layout>
                 </Layout>
                 <Layout level='2' style={styles.articleInfoSwitcher}>
@@ -136,9 +94,7 @@ const ArticleDetailsScreen = ({ navigation, route }) => {
                         appearance="ghost"
                         status="basic"
                         status={activeSwitchBtn === 1 ? 'primary' : 'basic'}
-                        // onPress={() => setActiveSwitchBtn(1)}
                         onPress={pickImageHandler}
-                    // accessoryRight={PhotoIcon}
                     >
                         PROMJENI SLIKU
                     </Button>

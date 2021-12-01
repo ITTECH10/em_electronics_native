@@ -4,7 +4,7 @@ import { Layout, Button, Text, useTheme } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native';
 import { DeleteIcon } from './../ICONS/icons'
 
-const ArticleItemAlternativeOne = ({ article, modalOpen, setModalOpen, setSelectedArticle }) => {
+const ArticleItemAlternativeOne = ({ article, setModalOpen, setSelectedArticle }) => {
     const theme = useTheme()
     const navigation = useNavigation()
 
@@ -46,14 +46,14 @@ const ArticleItemAlternativeOne = ({ article, modalOpen, setModalOpen, setSelect
                             Šifra: {article.codedNumber}
                         </Text>
                         <Button
-                            style={{ width: 100, borderWidth: 0, position: 'absolute', bottom: 0 }}
+                            style={styles.detailsBtn}
                             status="success"
                             onPress={() => navigation.navigate('ArticleDetails', { articleId: article.articleId })}
                         >
                             DETALJI
                         </Button>
                         <Button
-                            style={{ width: 45, borderWidth: 0, position: 'absolute', bottom: -2, left: 105 }}
+                            style={styles.deleteBtn}
                             status="danger"
                             appearance="outline"
                             accessoryRight={DeleteIcon}
@@ -105,5 +105,18 @@ const styles = StyleSheet.create({
     },
     articleTitleSub: {
         width: 200
+    },
+    detailsBtn: {
+        width: 100,
+        borderWidth: 0,
+        position: 'absolute',
+        bottom: 0
+    },
+    deleteBtn: {
+        width: 45,
+        borderWidth: 0,
+        position: 'absolute',
+        bottom: -2,
+        left: 105
     }
 })

@@ -2,11 +2,12 @@ import React from 'react'
 import { StyleSheet, KeyboardAvoidingView, ScrollView, Platform, Image } from 'react-native'
 import { Layout, Text, Button, Input, useTheme } from '@ui-kitten/components'
 import AdaptiveModal from './../../../constants/components/AdaptiveModal'
-import AddArticle from './../../FEATURES/AddArticle'
 import * as ImagePicker from 'expo-image-picker';
 import { useAppContext } from './../../../context/AppContext'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ActionButton from '../../../constants/components/ActionButton'
+import { PlusIcon } from './../../UI/ICONS/icons'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 const RESET_FORM_STATE = 'RESET_FORM_STATE'
@@ -190,8 +191,10 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
 
     return (
         <>
-            <AddArticle
-                onPressHandler={() => setModalOpen(true)}
+            <ActionButton
+                handlePress={() => setModalOpen(true)}
+                icon={PlusIcon}
+                severity='color-success-500'
             />
             <AdaptiveModal
                 visible={modalOpen}
@@ -201,7 +204,7 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
                 <Layout style={styles.formGroup}>
                     <Text
                         category="h5"
-                        style={{ textAlign: 'center', marginBottom: 6 }}
+                        style={styles.newArticleTitle}
                     >
                         Novi Artikal
                     </Text>
@@ -249,9 +252,9 @@ const AddArticleModal = ({ modalOpen, setModalOpen }) => {
                     >
                         {!image ? 'DODAJ SLIKU' : 'PROMJENI SLIKU'}
                     </Button>
-                    <Layout style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        {image && <Text category="h6" style={{ textAlign: 'center', fontFamily: 'roboto-bold', marginBottom: 5 }}>Izabrana slika</Text>}
-                        {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200, borderRadius: 13, marginBottom: 10 }} resizeMode="stretch" />}
+                    <Layout style={styles.imageBox}>
+                        {image && <Text category="h6" style={styles.selectedImageTitle}>Izabrana slika</Text>}
+                        {image && <Image source={{ uri: image }} style={styles.selectedImage} resizeMode="stretch" />}
                     </Layout>
                     <Layout style={styles.modalActions}>
                         <Button
@@ -298,6 +301,26 @@ const styles = StyleSheet.create({
         borderWidth: 0
     },
     addImageBtn: {
+        marginBottom: 10
+    },
+    newArticleTitle: {
+        textAlign: 'center',
+        marginBottom: 6
+    },
+    imageBox: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    selectedImageTitle: {
+        textAlign: 'center',
+        fontFamily: 'roboto-bold',
+        marginBottom: 5
+    },
+    selectedImage: {
+        width: '100%',
+        height: 200,
+        borderRadius: 13,
         marginBottom: 10
     }
 })
